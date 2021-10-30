@@ -24,6 +24,8 @@ async function run() {
         const placeCollection = database.collection("places");
         const orderCollection = database.collection("orders");
 
+
+
         // get places API
         app.get('/places', async (req, res) => {
             const cursor = placeCollection.find({})
@@ -52,6 +54,27 @@ async function run() {
             const result = await orderCollection.deleteOne(query);
             res.json(result);
         })
+
+        // get manageAllOrder api
+        app.get('/manageAllOrders', async (req, res) => {
+            const cursor = orderCollection.find({})
+            const manageOrders = await cursor.toArray();
+            res.send(manageOrders);
+        })
+
+
+
+        // DELETE manageAllorder API
+        app.delete('/manageAllOrders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await orderCollection.deleteOne(query);
+            res.json(result);
+
+
+        })
+
+
 
 
     }
