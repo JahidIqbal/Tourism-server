@@ -23,7 +23,7 @@ async function run() {
         const database = client.db("jtourism");
         const placeCollection = database.collection("places");
         const orderCollection = database.collection("orders");
-
+        const ServicesCollection = database.collection("services");
 
 
         // get places API
@@ -71,10 +71,24 @@ async function run() {
             const result = await orderCollection.deleteOne(query);
             res.json(result);
 
-
         })
 
 
+        // Add New services
+        app.post('/services', async (req, res) => {
+            const service = req.body;
+            console.log('hit the post api', service);
+            const result = await ServicesCollection.insertOne(service);
+            console.log(result);
+            res.json(result);
+        })
+
+        // Get Add New Services
+        app.get('/services', async (req, res) => {
+            const getService = ServicesCollection.find({})
+            const addNewService = await getService.toArray();
+            res.send(addNewService);
+        })
 
 
     }
