@@ -74,7 +74,7 @@ async function run() {
         })
 
 
-        // Add New services
+        // post Add New services
         app.post('/services', async (req, res) => {
             const service = req.body;
             console.log('hit the post api', service);
